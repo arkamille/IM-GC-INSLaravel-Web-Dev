@@ -1,0 +1,46 @@
+/*...1.BUAT DATABASE...................................................................*/
+CREATE DATABASE IF NOT EXISTS myshop;
+/*...2.BUAT TABLE......................................................................*/
+USE myshop;
+CREATE TABLE IF NOT EXISTS `myshop`.`users` ( 
+`id` INT AUTO_INCREMENT , 
+`name` VARCHAR(255) , 
+`email` VARCHAR(255), 
+`password` VARCHAR(255), 
+PRIMARY KEY (`id`)
+);
+	CREATE TABLE IF NOT EXISTS `myshop`.`categories` ( 
+	`id` INT AUTO_INCREMENT , 
+	`name` VARCHAR(255), 
+	PRIMARY KEY (`id`)
+	);
+		CREATE TABLE IF NOT EXISTS `myshop`.`items` ( 
+		`id` INT AUTO_INCREMENT , 
+		`name` VARCHAR(255), 
+		`description` VARCHAR(255), 
+		`price` INT, `stock` INT, 
+		`category_id` INT,
+		PRIMARY KEY (`id`),
+		FOREIGN KEY (`category_id`) REFERENCES categories(`id`)
+		);
+/*...3.MENGINPUT DATA..................................................................*/
+INSERT INTO `myshop`.`users` VALUES 
+(NULL, 'John Doe', 'john@doe.com', ''), 
+(NULL, 'Jane Doe', 'jane@doe.com', '');
+	INSERT INTO `myshop`.`categories` (name) VALUES 
+	('gadget'),('cloth'),('men'),('women'),('branded');
+		INSERT INTO `myshop`.`items` VALUES 
+		(NULL, 'Sumsang b50', 'hape keren dari merek sumsang', 2000000, 0, 5),
+		(NULL, 'Uniklooh', 'baju keren dari brand ternama', 1000000, 0, 2),
+		(NULL, 'IMHO Watch', 'jam tangan anak yang jujur banget', 2000000, 0, 1);
+/*...4.TAMPILKAN DATA..................................................................*/
+
+SELECT `users`.`id`, `users`.`name` FROM `myshop`.`users`;
+	SELECT `items`.`id`, `items`.`name` FROM `myshop`.`items` WHERE `price` > 1000000;
+		SELECT * FROM `myshop`.`items` WHERE INSTR(`items`.`name`, 'sang');
+			SELECT `items`.* , `categories`.`name` AS 'category_name' 
+			FROM `myshop`.`items` 
+			JOIN `myshop`.`categories` ON `items`.`category_id` = `categories`.`id`;
+
+/*...5.UPDATE DATA.....................................................................*/
+UPDATE `myshop`.`items` SET `price` = '2500000.' WHERE `items`.`name` = 'Sumsang b50';
